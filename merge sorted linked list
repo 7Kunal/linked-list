@@ -1,43 +1,52 @@
-Node* mergeTwoLLs(Node *head1, Node *head2) {
+Node* mergeTwoLLs(Node* head1, Node* head2) {
+	Node *ft = NULL;
+	Node *fh = NULL;
+
+	if (head1->data > head2->data) {
+		fh = ft = head2;
+		head2 = head2->next;
+	}
+
+	else {
+		fh = ft = head1;
+		head1 = head1->next;
+	}
+
+	while (head1 && head2) {
+		if (head1->data > head2->data) {
+			ft->next = head2;
+			ft = ft->next;
+			head2 = head2->next;
+		}
+
+		//changed else if to else
+		// if head1 & head2 is pointing to same numbers i.e. for eg. 20 & 20
+		// no condition would be true in earlier case will go in infinite loop
+		else {
+			ft->next = head1;
+			ft = ft->next;
+			head1 = head1->next;
+		}
+	}
+
+	//while loop is necessary as we don't know how many nodes are left in one list
+	//it can be 1, it can be 1000
+	if (head1) {
+		while (head1) {
+			ft->next = head1;
+			head1 = head1->next;
+			ft = ft->next;
+		}
+	}
+
+	else {
+		while (head2) {
+			ft->next = head2;
+			head2 = head2->next;
+			ft = ft->next;
+		}
+	}
   
-  Node *fh=NULL;
-  Node *ft=NULL;
-  
- if(head1->data>head2->data){
-    fh->next=head2;
-    ft->next=head2;
-  
-    head2=head2->next;
-  }else{
-    fh->next=head1;
-    ft->next=head1;
-  
-    head1=head1->next;
-  }
-  
-  while(head1!=NULL&&head2!=NULL){
-    if(head1->data>head2->data){
-      
-      ft->next=head2;
-      ft=ft->next;
-      head2=head2->next;    
-    
-    }else if(head2->data>head1->data){
-    
-      ft->next=head1;
-      ft=ft->next;
-      head1=head1->next;
-   
-    }
-    
-  }
-  if(head1!=NULL){
-    ft->next=head1;
-   }else if(head2!=NULL){
-    ft->next=head2;
-  }
-  
- 
   return fh;
 }
 
